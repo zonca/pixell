@@ -131,3 +131,5 @@ If you do not have write access, create a fork of this repository and proceed as
 .. _Contributing: https://pixell.readthedocs.io/en/latest/contributing.html
 .. _NERSC: https://pixell.readthedocs.io/en/latest/nersc.html
 .. _MACOSX: https://github.com/simonsobs/pspy/blob/master/INSTALL_MACOS.rst
+
+Triggering github actions
