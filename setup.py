@@ -10,7 +10,6 @@ from numpy.distutils.core import setup, Extension, build_ext, build_src
 import versioneer
 import os, sys
 import subprocess as sp
-import numpy as np
 import glob
 build_ext = build_ext.build_ext
 build_src = build_src.build_src
@@ -64,6 +63,15 @@ def pip_install(package):
         pip.main(['install', package])
     else:
         pip._internal.main(['install', package])
+
+def get_numpy_include():
+    """Avoids importing `numpy` at the top of `setup.py`
+
+    Now we can install the package even if `numpy` is not
+    installed yet.
+    """
+    import numpy as np
+    return np.get_include()
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
@@ -205,17 +213,17 @@ setup(
             sources=['cython/sharp.c', 'cython/sharp_utils.c'],
             libraries=['sharp2', 'm'],
             library_dirs=['_deps/libsharp2/build/lib'],
-            include_dirs=[np.get_include()],
+            include_dirs=[get_numpy_include()],
             **compile_opts),
         Extension('pixell.distances',
             sources=['cython/distances.c','cython/distances_core.c'],
             libraries=['m'],
-            include_dirs=[np.get_include()],
+            include_dirs=[get_numpy_include()],
             **compile_opts),
         Extension('pixell.srcsim',
             sources=['cython/srcsim.c','cython/srcsim_core.c'],
             libraries=['m'],
-            include_dirs=[np.get_include()],
+            include_dirs=[get_numpy_include()],
             **compile_opts),
         Extension('pixell._interpol_32',
             sources=['fortran/interpol_32.f90'],
